@@ -1,0 +1,26 @@
+#cloud-config
+groups:
+  - ubuntu: [root,sys]
+  - hashicorp
+
+# Add users to the system. Users are added after groups are added.
+users:
+  - default
+  - name: terraform
+    gecos: terraform
+    shell: /bin/bash
+    primary_group: hashicorp
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    groups: users, admin
+    lock_passwd: false
+    ssh_authorized_keys:
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCdXjjvUiPLVOQtaNd7AoTRAwddxj2VuNk+wZkTg97lnOvef2vrcqYZjhdqswa0thwUkbLD8OzTmOsL+v2Ht4mpC/Fm8NKARtluqS6H2mY31ZzTOC4T/5Nzru38csyCEuEppJrKJ2Kkn7g2c4+xXHCklcZTmCcNw2TKQK4T2nvkIhOcB3GIPw6ttAijGe3onLah3Iw+juK76ZNy05cSggmerF51H56X2uJBUymkH07ZIFmuAGs6MMOvq/lO9BWB3vM1QHpOXC1dEwmDCZp5xSjDmqHBbv0Gb5VzfDPGoI9gN9A2nrN4xQHW2qLeQsWpECiPfXG9tcQ0SUCTYafad+xyP0MSTyuN5N2kl2Z+MTPZXTA3jBx3YLhZ/olF4J5iMLH5CpUPCDIpFVnoPlu9NhMVi4RKaYXaLfo2OxVAVBBJLCa+2NdLlGMdRMoLjfpZ65LtE4lssFwDf8OUSC6oP9Slf6drGFld9JZKlQtyl46KGsxc9STkTrGMFajleZluLRU= ssh@edwinclement08.com
+
+
+runcmd:
+  - sudo apt-get update
+  - sudo apt install apache2 -q -y
+  - sudo curl https://raw.githubusercontent.com/edwinclement08/home-server-automation/master/terraform/app/index.php -O
+  - sudo rm /var/www/html/index.html
+  - sudo mv index.php /var/www/html
+  - sudo systemctl restart apache2
