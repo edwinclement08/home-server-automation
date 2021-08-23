@@ -16,5 +16,5 @@ resource "digitalocean_droplet" "personal-automated" {
   name      = "personal-automated"
   region    = "blr1"
   size      = "s-1vcpu-1gb"
-  user_data = file("terramino_app.yaml")
+  user_data = file("base-cloud-init.yaml")
 }
