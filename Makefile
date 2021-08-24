@@ -11,16 +11,18 @@ tf-plan: tf-lint ## Check what changes are gonna happen
 	terraform -chdir=terraform plan 
 
 tf-apply: tf-lint ## Apply the changes
-	terraform -chdir=terraform apply  --auto-approve
-
+	terraform -chdir=terraform apply
 
 # Ansible commands
 
 ansible-exists: ## Confirm Ansible Exists
 	$(call assert_command_exists,ansible)
 
-ansible-test: ansible-exists ## A test task
+ansible-test: ansible-exists ## Test Ansible can reach all the hosts
 	ansible all -m ping
+
+ansible-provision: ansible-exists ## Run the Provision Playbook to all hosts
+	ansible-playbook ansible/playbooks/provision.yml 
 
 
 ## Utilities

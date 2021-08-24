@@ -1,2 +1,6 @@
-[personal_automated]
-${droplet-ip} ansible_user=edwin
+[all:vars]
+username=edwin
+github_ssh_key_url=https://github.com/edwinclement08.keys
+
+[digitalocean_servers]
+personal_automated ansible_host=${droplet-ip} ansible_user=edwin
