@@ -1,0 +1,8 @@
+---
+- name: provision cloud resources
+  hosts: all
+  roles:
+    - role: common 
+      become: true  
+      tags: 
+        - role-common
